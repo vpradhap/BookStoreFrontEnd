@@ -1,0 +1,61 @@
+<div class="outer-container" fxLayout="row" fxLayoutAlign="center center">
+
+  <div class="logo-container" fxLayout="column" fxLayoutAlign="center start">
+    <img class="logo" src="../../../assets/login.png">
+    <p class="text">ONLINE BOOK SHOPPING</p>
+  </div>
+
+  <div class="login-signup" fxLayout="column" fxLayoutAlign="center center">
+
+    <div class="header" fxLayout="row" fxLayoutAlign="space-between" >
+      <div fxLayout="column" fxLayoutAlign="start center">
+        <button class="login" routerLink="/login">LOGIN</button>
+        <span class="line"></span>
+      </div>
+      <div class="signup-div" fxLayout="column" fxLayoutAlign="start center">
+        <button class="signup">SIGNUP</button>
+        <span class="line2"></span>
+      </div>
+    </div>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <div fxLayout="column" fxLayoutAlign="start start">
+        <mat-label>Full Name</mat-label>
+        <mat-form-field appearance="outline" >
+            <input matInput type="text" placeholder="Full Name" formControlName="fullname">
+            <mat-error>Enter valid Name</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="column" fxLayoutAlign="start start">
+        <mat-label>Email Id</mat-label>
+        <mat-form-field appearance="outline" >
+            <input matInput type="email" placeholder="Email" formControlName="email">
+            <mat-error>Enter valid email</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="column" fxLayoutAlign="start start">
+        <mat-label>Password</mat-label>
+        <mat-form-field appearance="outline" class="form-field">
+            <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" formControlName="password">
+            <button mat-icon-button type="button" matSuffix (click)="hide = !hide">
+                <mat-icon style="color:#9D9D9D">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error>Enter valid password</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="column" fxLayoutAlign="start start">
+        <mat-label>Mobile Number</mat-label>
+        <mat-form-field appearance="outline" >
+            <input matInput type="email" placeholder="Mobile Number" formControlName="mobile">
+            <mat-error>Enter valid mobile number</mat-error>
+        </mat-form-field>
+      </div>
+
+      <button mat-raised-button type="submit" class="btn-primary" color="primary">Signup</button>
+    </form>
+
+  </div>
+</div>

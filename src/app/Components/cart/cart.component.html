@@ -1,0 +1,194 @@
+<div class="layout">
+  <div fxLayout="row">
+    <span class="home" routerLink="/home/books">Home / </span><span style="color: black; font-weight: 500;">My
+      Cart</span>
+  </div>
+  <!-- cart details -->
+  <div class="count" fxLayout="column" fxLayoutAlign="center start">
+    <div class="cart-detail" fxLayout="row" fxLayoutAlign="space-between center">
+      <span style="color: black; font-weight: 500;">My Cart({{cartlist?.length}})</span>
+      <mat-form-field appearance="outline">
+        <mat-label>Location</mat-label>
+        <mat-select>
+          <mat-option>Location 1</mat-option>
+          <mat-option>Location 2</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <span class="empty-item" *ngIf="cartlist?.length<1">Cart is Empty</span>
+    <div class="item" *ngFor="let cart of cartlist" fxLayoutAlign="space-between center">
+      <div fxLayout="row">
+        <div>
+          <img class="book-image" [src]="cart?.bookImage==('string'||null||undefined)? defaultImage : cart?.bookImage"
+            width="90px" height="110px">
+        </div>
+        <div class="book-details" fxLayout="column" fxLayoutAlign="start start">
+          <h3 class="bookName">{{cart?.bookName}}</h3>
+          <span class="authorName">by {{cart?.authorName}}</span>
+          <div fxLayout="row" style="margin-bottom: 10px;">
+            <div><span class="discountPrice">Rs. {{cart?.discountPrice}}</span></div>
+            <div><span class="originalPrice">Rs. {{cart?.originalPrice}}</span></div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <button mat-stroked-button mat-icon-button (click)="decreaseQty(cart.cartId, cart.bookInCart)"
+              [disabled]="cart.bookInCart==1"><i class="material-icons">&#xe15b;</i></button>
+            <span class="cartQty">{{cart.bookInCart}}</span>
+            <button mat-stroked-button mat-icon-button (click)="increaseQty(cart.cartId, cart.bookInCart)"
+              [disabled]="cart.bookInCart==4"><i class="material-icons">&#xe145;</i></button>
+            <button mat-stroked-button (click)="removeFromCart(cart.cartId)" style="margin-left: 25px;"> Remove</button>
+          </div>
+        </div>
+      </div>
+      <button class="place-order-button" mat-flat-button color="primary" (click)="stepUp()">Place Order</button>
+    </div>
+  </div>
+  <!-- Address details -->
+  <div class="address" fxLayout="column" fxLayoutAlign="center start">
+    <div>
+      <span *ngIf="step==0">Address Details</span>
+    </div>
+    <div *ngIf="isAddEditAddress==false && step>=1">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <span>Customer Details</span>
+        <button mat-stroked-button class="add-new" *ngIf="step>=1" (click)="addNewAddress()">Add New Address</button>
+      </div>
+      <div *ngFor="let address of addressList" style="margin-bottom: 10px;">
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <input type="radio" class="addresstype" [name]="address" [id]="address.addressId" [(ngModel)]="addressId"
+            [value]="address.addressId">
+          <span><b> {{addressList.indexOf(address)+1}}{{address.type==1? ' . HOME' : address.type==2? ' .
+              WORK' : ' . OTHER'}} </b></span>
+          <button mat-flat-button style="color:#A03037; margin-left: 20px;"
+            (click)="editAddress()" *ngIf="addressId==address.addressId">Edit</button>
+        </div>
+
+        <div fxLayout="column" style="width: 100%; margin-left:20px">
+          <mat-label *ngIf="addressId!=address.addressId"><b>Address:</b></mat-label>
+          <span *ngIf="addressId!=address.addressId" style="margin-top: 5px;">{{fullName}}</span>
+          <span *ngIf="addressId!=address.addressId">{{address.address}}</span>
+          <span *ngIf="addressId!=address.addressId">{{address.city}}, {{address.state}}</span>
+          <span *ngIf="addressId!=address.addressId">{{mobileNumber}}</span>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="addressId==address.addressId" >
+          <div fxLayout="column" style="width: 48%;">
+            <mat-label>FullName</mat-label>
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="FullName" [(ngModel)]="fullName" disabled>
+            </mat-form-field>
+          </div>
+          <div fxLayout="column" style="width: 48%;">
+            <mat-label>MobileNumber</mat-label>
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="MobileNumber" [(ngModel)]="mobileNumber" disabled>
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-label *ngIf="addressId==address.addressId">Address : </mat-label>
+        <textarea matInput placeholder="Enter your Address" class="textarea-address" [(ngModel)]="address.address"
+          style="margin-top: 10px;" cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="3" disabled
+          *ngIf="addressId==address.addressId"></textarea>
+
+        <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="addressId==address.addressId">
+          <div fxLayout="column" style="width: 48%;">
+            <mat-label>City</mat-label>
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="City" [(ngModel)]="address.city" disabled>
+            </mat-form-field>
+          </div>
+          <div fxLayout="column" style="width: 48%;">
+            <mat-label>State</mat-label>
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="State" [(ngModel)]="address.state" disabled>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="addressbox" fxLayout="column" *ngIf="isAddEditAddress==true">
+      <div fxLayout="row">
+        <span><b>{{addressType==1? 'Address type : HOME' : addressType==2? 'Address type : WORK' : 'Address type :
+            OTHER'}}</b></span>
+      </div><br>
+
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="column" style="width: 48%;">
+          <mat-label>FullName</mat-label>
+          <mat-form-field appearance="outline">
+            <input matInput placeholder="FullName" [(ngModel)]="fullName">
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" style="width: 48%;">
+          <mat-label>MobileNumber</mat-label>
+          <mat-form-field appearance="outline">
+            <input matInput placeholder="MobileNumber" [(ngModel)]="mobileNumber">
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxLayout="column" style="width: 100%;">
+        <mat-label>Address:</mat-label>
+        <textarea matInput placeholder="Enter your Address" class="textarea-address" [(ngModel)]="address"
+          cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="3" required></textarea>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="column" style="width: 48%;">
+          <mat-label>City</mat-label>
+          <mat-form-field appearance="outline">
+            <input matInput placeholder="City" [(ngModel)]="city">
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" style="width: 48%;">
+          <mat-label>State</mat-label>
+          <mat-form-field appearance="outline">
+            <input matInput placeholder="State" [(ngModel)]="state">
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        <mat-label style="margin-bottom: 10px;"><b>Type:</b></mat-label>
+        <mat-radio-group aria-label="Select an option" class="type" fxLayout="row" fxLayoutAlign="start center">
+          <mat-radio-button name="type" ngDefaultControl id="1" [checked]="addressType==1" [(ngModel)]="addressType"
+            value="1">Home</mat-radio-button>
+          <mat-radio-button name="type" ngDefaultControl id="2" [checked]="addressType==2" [(ngModel)]="addressType"
+            value="2">Work</mat-radio-button>
+          <mat-radio-button name="type" ngDefaultControl id="3" [checked]="addressType==3" [(ngModel)]="addressType"
+            value="3">Other</mat-radio-button>
+        </mat-radio-group><br>
+      </div>
+
+      <div fxLayoutAlign="space-between center">
+        <button mat-stroked-button (click)="isAddEditAddress = false">Cancel</button>
+        <button mat-flat-button color="primary" type="submit" (click)="addAddress()" *ngIf="addressObj?.length == 0">Add
+          Address</button>
+      </div>
+    </div>
+    <button mat-flat-button color="primary" type="submit" (click)="stepUp2()" style="margin-left: 670px;"
+      *ngIf="step>=1">Continue</button>
+  </div>
+  <!-- Order summary -->
+  <div class="order-summary" fxLayout="column" fxLayoutAlign="center start">
+    <div>
+      <span *ngIf="step>=0">OrderSummary</span>
+    </div>
+    <div *ngIf="step==2">
+      <div class="item" *ngFor="let cart of cartlist" fxLayoutAlign="space-between center">
+        <div fxLayout="row">
+          <div>
+            <img class="book-image"
+              [src]="cart?.bookImage==('string'||''||null||undefined)? defaultImage : cart?.bookImage" width="90px"
+              height="110px">
+          </div>
+          <div class="book-details" fxLayout="column" fxLayoutAlign="start start">
+            <h3 class="bookName">{{cart?.bookName}}</h3>
+            <span class="authorName">by {{cart?.authorName}}</span>
+            <div fxLayout="row" style="margin-bottom: 10px;">
+              <div><span class="discountPrice">Rs. {{cart?.discountPrice}}</span></div>
+              <div><span class="originalPrice">Rs. {{cart?.originalPrice}}</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button mat-flat-button color="primary" (click)="addOrder()" style="margin-left: 670px;">Checkout</button>
+    </div>
+  </div>
+</div>

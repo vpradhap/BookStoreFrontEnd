@@ -1,0 +1,131 @@
+.layout{
+    padding-bottom: 20px;
+    padding-left: 12%;
+    padding-right: 12%;
+    margin-top: 5px;
+    height: fit-content;
+  }
+  .count{
+    margin-top: 10px;
+    padding-left: 25px;
+    border: 1px solid lightgray;
+  }
+  .cart-detail{
+    margin-top: 10px;
+    padding: 10px 25px;
+    width: 100%;
+  }
+  .location{
+    width: 150px;
+  }
+  .empty-item{
+    margin-bottom: 10px;
+    margin-left: 300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 20px;
+  }
+  .item{
+    margin-bottom: 10px;
+    padding: 20px;
+  }
+  .book-image{
+    box-shadow: 2px 2px 5px gray;
+  }
+  .book-details{
+    padding: 0px 25px;
+    width: 100%;
+  }
+  .bookName{
+    letter-spacing: 0px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #0A0102;
+    margin-bottom: 10px;
+  }
+  .authorName{
+    letter-spacing: 0px;
+    font-weight: 500;
+    color: #878787;
+    margin-bottom: 10px;
+  }
+  .discountPrice{
+    font-size: 16px;
+    font-weight: 600;
+    color: #0A0102;
+    margin-right: 10px;
+  }
+  .originalPrice{
+    font-weight: 600;
+    text-decoration: line-through;
+    letter-spacing: 0px;
+    color: #878787;
+  }
+  .discount{
+    color:#388E3C;
+    margin-left: 10px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .mat-icon-button {
+    width: 25px;
+    height: 25px;
+    line-height: 20px;
+    border-radius: 50%;
+  }
+  .cartQty{
+    padding: 5px 20px 5px 20px;
+    margin: 0px 5px;
+    border: 1px solid;
+    border-radius: 3px;
+    border-color: rgba(0,0,0,.12);
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .place-order-button{
+    margin-top: 100px;
+    margin-left: 300px;
+    width: 150px;
+  }
+  
+  .address{
+    padding: 15px;
+    margin-top: 10px;
+    padding-left: 25px;
+    border: 1px solid lightgray;
+  }
+  
+  input.mat-input-element {
+    margin-bottom: 7px;
+  }
+  
+  .textarea-address{
+    overflow: hidden; 
+    resize: none !important; 
+    word-wrap: break-word; 
+    border: 1px solid lightgray; 
+    padding: 10px; 
+    width: calc((100%) - 20px); 
+    margin-bottom: 20px; 
+    border-radius: 4px;
+  }
+  
+  .type{
+    margin: 10px 0px;
+  }
+  .type mat-radio-button{
+    margin: 0px 50px 0px 0px;
+  }
+  .add-new{
+    margin-left: 200px;
+    color:#A03037; 
+    border:1px solid #A03037;
+  }
+  .order-summary{
+    padding: 15px;
+    margin-top: 10px;
+    padding-left: 25px;
+    border: 1px solid lightgray;
+  }
+  

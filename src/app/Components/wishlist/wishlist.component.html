@@ -1,0 +1,28 @@
+<div class="layout">
+    <div fxLayout="row">
+      <span class="home" routerLink="/home/books">Home / </span><span style="color: black; font-weight: 500;">My Wishlist</span>
+    </div>
+    <div class="count" fxLayout="row" fxLayoutAlign="space-between center">
+      <span style="color: black; font-weight: 500;">My Wishlist({{wishlist?.length}})</span>
+    </div>
+    <span class="item" *ngIf="wishlist?.length<1" fxLayoutAlign="center center">Wishlist is Empty</span>
+    <div class="item" *ngFor="let item of wishlist" fxLayoutAlign="space-between center">
+      <div fxLayout="row">
+        <div>
+            <img class="book-image" [src]="item?.bookImage==('string'||null||undefined)? defaultImage : item?.bookImage" width="90px" height="110px">
+        </div>
+        <div class="book-details" fxLayout="column" fxLayoutAlign="start start">
+            <h3 class="bookName">{{item?.bookName}}</h3>
+            <span class="authorName">by {{item?.authorName}}</span>
+            <div fxLayout="row" style="margin-bottom: 10px;">
+                <div><span class="discountPrice">Rs. {{item?.discountPrice}}</span></div>
+                <div><span class="originalPrice">Rs. {{item?.originalPrice}}</span></div>
+            </div>
+        </div>
+    </div>
+    <button mat-icon-button (click)="removeFromWishlist(item.wishlistId)"> 
+        <i class="material-icons">&#xe92b;</i>
+    </button>
+    </div>
+  </div>
+  
